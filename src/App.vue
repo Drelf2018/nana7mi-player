@@ -20,25 +20,62 @@
         </el-scrollbar>
       </el-aside>
       <el-container>
-        <el-header height="35vw" class="header">
+        <el-header height="35vw" class="header" :style="{backgroundImage: `url(${selectedIcon.banner})`}">
           <h2>你好李鑫</h2>
         </el-header>
-        <el-main>{{ IconContents[lastSelected].id }}</el-main>
+        <el-main class="main" style="--el-main-padding: 10px 0px">
+          <el-scrollbar 
+            :height="'calc(100vh - 35vw - 20px)'"
+            style="padding: 0px 10px;"
+            view-class="view">
+            <div class="line" v-for="i in [...Array(selectedIcon.id).keys()]">
+              <el-card shadow="hover" class="card" :body-style="{ padding: '0px' }">
+                <img
+                  src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                  class="image"
+                />
+                <div style="padding: 14px">
+                  <span>Yummy hamburger</span>
+                  <div class="bottom">
+                    <time class="time">{{ selectedIcon.id }}</time>
+                    <el-button text class="button">Operating</el-button>
+                  </div>
+                </div>
+              </el-card>
+              <el-card shadow="hover" class="card" :body-style="{ padding: '0px' }">
+                <img
+                  src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                  class="image"
+                />
+                <div style="padding: 14px">
+                  <span>Yummy hamburger</span>
+                  <div class="bottom">
+                    <time class="time">{{ selectedIcon.id }}</time>
+                    <el-button text class="button">Operating</el-button>
+                  </div>
+                </div>
+              </el-card>
+            </div>
+          </el-scrollbar>
+        </el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { IconContent } from './components/util';
 
 import Icon from './components/Icon.vue'
 
 // 按钮蓝色边框选择
 const lastSelected = ref(0)
+const selectedIcon = computed(() => {
+  return IconContents.value[lastSelected.value]
+})
 function changeSelect(id: number) {
-  IconContents.value[lastSelected.value].select = false
+  selectedIcon.value.select = false
   IconContents.value[id].select = true
   lastSelected.value = id
 }
@@ -48,7 +85,8 @@ const IconContents = ref<IconContent[]>([
     id: 0,
     select: false,
     face: true,
-    src: "/favicon.ico"
+    src: "/favicon.ico",
+    banner: "https://yun.nana7mi.link/7mi.webp"
   }
 ])
 
@@ -57,17 +95,17 @@ for(let i=1;i<50;i++) {
     id: i,
     select: false,
     face: false,
-    src: "/favicon.ico"
+    src: "/favicon.ico",
+    banner: "https://yun.nana7mi.link/afternoon.webp"
   })
 }
-
 </script>
 
 <style scoped lang="scss">
 .common-layout {
   width: 100vw;
   overflow: hidden;
-  
+
   .aside {
     max-width: 120px;
     height: 100vh;
@@ -102,7 +140,6 @@ for(let i=1;i<50;i++) {
   }
 
   .header {
-    background-image: url("https://yun.nana7mi.link/afternoon.webp");
     background-size: cover;
     h2 {
       color: white;
@@ -111,6 +148,25 @@ for(let i=1;i<50;i++) {
       transform: translateY(-200%);
       text-shadow: 1px 2px 2px rgb(0 0 0 / 50%);
       float: left;
+    }
+  }
+  
+  :deep(.view) {
+    .line:first-child {
+      padding-top: 0;
+    }
+
+    .line {
+      display: flex;
+      justify-content: space-between;
+      padding: 2.5px 0;
+      .card {
+        width: calc(50% - 5px);
+      }
+    }
+
+    .line:last-child {
+      padding-bottom: 0;
     }
   }
 }
