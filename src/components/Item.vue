@@ -30,8 +30,8 @@ defineProps({
 	}
 
 	.container { 
-		padding: 5px 10px;
-
+		padding: 5px;
+		font-size: 0.8em;
 		span {
 			width: 100%;
 			display: block;
@@ -44,7 +44,7 @@ defineProps({
 			position: relative;
 			bottom: 0;
 			.time {
-				font-size: 0.5em;
+				font-size: 0.7em;
 				color: grey;
 				display: block;
 				text-align: right;
