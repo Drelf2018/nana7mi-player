@@ -45,6 +45,7 @@ setTimeout(() => {
   .header {
     background-size: cover;
     z-index: 2;
+    -webkit-app-region: drag;
 
     h2 {
       color: white;

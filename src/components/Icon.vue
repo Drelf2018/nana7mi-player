@@ -67,7 +67,7 @@ function up() {
   }
 
   &[selected=true] {
-    outline: 0.2em solid var(--select-border);
+    box-shadow: 0px 0px 0px 0.2em var(--select-border);
   }
 
   &[face=false] {
