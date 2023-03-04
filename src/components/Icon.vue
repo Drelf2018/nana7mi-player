@@ -1,13 +1,9 @@
 <template>
-  <div
-    ref="icon"
-    class="icon"
-    @mouseup="up"
-    @mouseleave="up" 
-    @mousedown="down" 
-    :face="content?.face"
-    :selected="content?.select"
-  >
+  <div ref="icon" class="icon" v-if="content"
+    @mousedown="down" @mouseup="up" 
+    @touchstart="down" @touchend="up" 
+    @mouseenter="enter" @mouseleave="up" 
+    :face="content?.face" :selected="content?.select">
     <div class="icon-container">
       <img :src="content?.src" class="pic">
     </div>
@@ -25,20 +21,34 @@ const props = defineProps({
 const icon = ref<HTMLDivElement | null>(null)
 const emit = defineEmits(['select'])
 
+function enter() {
+  icon.value!.classList.add("hover")
+}
+
 function down() {
-  emit("select", props.content!.id)
+  emit("select", props.content?.id)
   icon.value!.classList.add("down")
 }
 
 function up() {
   icon.value!.classList.remove("down")
+  icon.value!.classList.remove("hover")
 }
-
 </script>
 
 <style lang="scss">
 .down {
   scale: 0.9 !important;
+}
+
+.hover {
+  &[selected=true] {
+    scale: 1.05;
+  }
+
+  &[selected=false] {
+    scale: 1.1;
+  }
 }
 
 .icon {
@@ -53,10 +63,7 @@ function up() {
   .pic {
     width: 100%;
     display: block;
-  }
-
-  &:hover {
-    scale: 1.1;
+    background-color: var(--pic-background-color);
   }
 
   &[selected=true] {
