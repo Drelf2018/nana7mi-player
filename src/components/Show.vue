@@ -1,5 +1,5 @@
 <template>
-	<el-scrollbar :height="'calc(100vh - 35vw)'" view-class="view">
+	<el-scrollbar :height="'calc(100 * var(--vh) - 35vw)'" view-class="view">
 		<div class="line" v-for="line in realData">
 			<Item v-for="i in line" :item="i" :style="{'--size': size}" />
 		</div>

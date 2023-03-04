@@ -15,4 +15,10 @@ const router = createRouter({
     ]
 })
 
+function updateVH() {
+    document.body.style.setProperty("--vh", window.innerHeight / 100 + "px")
+}
+updateVH()
+window.onresize = updateVH
+
 createApp(App).use(ElementPlus).use(router).mount('#app')

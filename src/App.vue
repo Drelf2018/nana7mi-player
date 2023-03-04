@@ -37,7 +37,7 @@ setTimeout(() => {
 
   .aside {
     max-width: 120px;
-    height: 100vh;
+    height: calc(100 * var(--vh));
     background-color: var(--scroll-background);
     overflow: hidden;
   }
