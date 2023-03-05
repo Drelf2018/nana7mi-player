@@ -3,7 +3,7 @@
     <Icon :content="IconMap.get(0)" @select="changeSelect" />
     <Icon :content="IconMap.get(1)" @select="changeSelect" style="--pic-background-color: white" />
   </div>
-  <el-scrollbar :height="'calc(100 * var(--vh) - 35vw)'" view-style="z-index: 1" class="scroll">
+  <el-scrollbar :height="'calc(100 * var(--vh) - min(35vw, 200px) - var(--title))'" view-style="z-index: 1" class="scroll">
     <Icon v-for="w in watch" :key="w" :content="IconMap.get(w)" @select="changeSelect" />
   </el-scrollbar>
 </template>
@@ -35,7 +35,7 @@ IconMap.value.set(0, {
   id: 0,
   select: false,
   face: true,
-  src: "/favicon.ico",
+  src: "https://i2.hdslb.com/bfs/face/de957f8066a32cb00183e6b8f71d3fef35b4d3ba.jpg",
   banner: "https://yun.nana7mi.link/7mi.webp",
   name: "头像"
 })
@@ -66,6 +66,7 @@ defineExpose({ icon: selectedIcon })
 <style scoped lang="scss">
 .sticky {
   height: 35vw;
+  max-height: 200px;
   position: relative;
   z-index: 2;
   display: flex;

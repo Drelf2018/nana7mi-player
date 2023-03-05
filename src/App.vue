@@ -1,4 +1,5 @@
 <template>
+  <router-view />
   <el-container class="common-layout">
     <el-aside width="18vw" class="aside">
       <Sider ref="sider" :watch="watch" />
@@ -10,7 +11,7 @@
       <el-main style="--el-main-padding: 0px">
         <p v-if="sider?.icon.id == 0">头像</p>
         <p v-else-if="sider?.icon.id == 1">主页</p>
-        <Show v-else :size="2"/>
+        <Show v-else :size="0"/>
       </el-main>
     </el-container>
   </el-container>
@@ -25,6 +26,8 @@ import Show from './components/Show.vue';
 const sider = ref<InstanceType<typeof Sider> | null>(null)
 const watch = ref<number[]>([])
 
+document.body.style.setProperty("--title", window.location.pathname == "/electron" ? "50px" : "0px")
+
 setTimeout(() => {
   watch.value = [2, 3, 4, 5]
 }, 10)
@@ -33,19 +36,20 @@ setTimeout(() => {
 <style scoped lang="scss">
 .common-layout {
   width: 100vw;
+  height: calc(100 * var(--vh));
   overflow: hidden;
 
   .aside {
-    max-width: 120px;
-    height: calc(100 * var(--vh));
+    max-width: 100px;
+    height: calc(100 * var(--vh) - var(--title));
     background-color: var(--scroll-background);
     overflow: hidden;
   }
 
   .header {
+    max-height: 200px;
     background-size: cover;
     z-index: 2;
-    -webkit-app-region: drag;
 
     h2 {
       color: white;

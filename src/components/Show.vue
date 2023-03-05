@@ -1,23 +1,27 @@
 <template>
-	<el-scrollbar :height="'calc(100 * var(--vh) - 35vw)'" view-class="view">
+	<el-scrollbar :height="'calc(100 * var(--vh) - min(35vw, 200px) - var(--title))'" view-class="view">
 		<div class="line" v-for="line in realData">
-			<Item v-for="i in line" :item="i" :style="{'--size': size}" />
+			<Item v-for="i in line" :item="i" :style="{'--size': realSize}" />
 		</div>
 	</el-scrollbar>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { ItemContent } from './util';
+import { ItemContent, on } from './util';
 import { TaskWaitAll } from './bili'
 
 import Item from './Item.vue'
 
 const props = defineProps({
 	itemURL: String,
-	size: Number
+	size: {
+		type: Number,
+		default: 0
+	}
 })
 
+const realSize = ref(props.size)
 const Items = ref<ItemContent[]>([])
 
 const realData = computed(() => {
@@ -26,7 +30,7 @@ const realData = computed(() => {
 	Items.value.forEach(
 		data => {
 			tempData.push(data)
-			if(props.size && tempData.length >= props.size) {
+			if(tempData.length >= realSize.value) {
 				reslData.push(tempData)
 				tempData = []
 			}
@@ -34,6 +38,10 @@ const realData = computed(() => {
 	)
 	if(tempData.length != 0) reslData.push(tempData)
 	return reslData
+})
+
+on("resize", function() {
+	if(props.size == 0) realSize.value = Math.ceil(window.innerWidth / 250)
 })
 
 TaskWaitAll([

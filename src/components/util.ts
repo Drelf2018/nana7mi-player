@@ -27,3 +27,8 @@ export function formatDate(time: any): string {
 	// 这里修改返回时间的格式
     return YY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
 }
+
+export function on(event: string, fn: () => any) {
+    fn()
+    window.addEventListener(event, fn)
+}
