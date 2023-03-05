@@ -3,36 +3,35 @@
     @mousedown="down" @mouseup="up" 
     @touchstart="down" @touchend="up" 
     @mouseenter="enter" @mouseleave="up" 
-    :face="content?.face" :selected="content?.select">
+    :face="content.face" :selected="content.select">
     <div class="icon-container">
-      <img :src="content?.src" class="pic">
+      <img :src="content.src" class="pic">
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, PropType } from 'vue'
-import { IconContent } from './util'
+<script setup>
+import { ref } from 'vue'
 
 const props = defineProps({
-  content: Object as PropType<IconContent>
+  content: Object
 })
 
-const icon = ref<HTMLDivElement | null>(null)
+const icon = ref(null)
 const emit = defineEmits(['select'])
 
 function enter() {
-  icon.value!.classList.add("hover")
+  icon.value.classList.add("hover")
 }
 
 function down() {
-  emit("select", props.content?.id)
-  icon.value!.classList.add("down")
+  emit("select", props.content.id)
+  icon.value.classList.add("down")
 }
 
 function up() {
-  icon.value!.classList.remove("down")
-  icon.value!.classList.remove("hover")
+  icon.value.classList.remove("down")
+  icon.value.classList.remove("hover")
 }
 </script>
 

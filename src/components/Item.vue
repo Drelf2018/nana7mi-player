@@ -1,23 +1,23 @@
 <template>
 	<el-card shadow="hover" class="card" :body-style="{ padding: '0px' }">
-		<a :href="item?.url" target="_blank">
-			<img :src="item?.src" class="image" />
+		<a :href="item.url" target="_blank">
+			<img :src="item.src" class="image" />
 			<div class="container">
-				<span>{{ item?.title }}</span>
+				<span>{{ item.title }}</span>
 				<div class="bottom">
-					<time class="time">{{ item?.time }}</time>
+					<time class="time">{{ item.time }}</time>
 				</div>
 			</div>
 		</a>
 	</el-card>
 </template>
 
-<script setup lang="ts">
-import { PropType } from 'vue';
-import { ItemContent } from './util';
+<script setup>
+
+import { ElCard } from 'element-plus'
 
 defineProps({
-	item: Object as PropType<ItemContent>
+	item: Object
 })
 </script>
 

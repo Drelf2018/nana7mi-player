@@ -5,14 +5,25 @@
 			<span>海比播放器</span>
 		</div>
 		<div>
-			<el-button :icon="Minus" circle size="small" />
-			<el-button :icon="Close" circle size="small" />
+			<el-button :icon="Minus" circle size="small" @click="miniWin" />
+			<el-button :icon="Close" circle size="small" @click="closeWin" />
 		</div>
 	</div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { Close, Minus } from '@element-plus/icons-vue'
+import { ipcRenderer } from "electron";
+
+import { ElAvatar, ElButton } from 'element-plus'
+
+function closeWin() {
+  ipcRenderer.send("window-close");
+}
+
+function miniWin() {
+  ipcRenderer.send("window-mini");
+}
 </script>
 
 <style scoped lang="scss">
@@ -35,6 +46,10 @@ import { Close, Minus } from '@element-plus/icons-vue'
 	div {
 		display: flex;
 		align-items: center;
+	}
+
+	button {
+		-webkit-app-region: none;
 	}
 }
 </style>

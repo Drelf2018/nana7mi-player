@@ -1,49 +1,56 @@
 <template>
-  <router-view />
+  <Title></Title>
   <el-container class="common-layout">
     <el-aside width="18vw" class="aside">
       <Sider ref="sider" :watch="watch" />
     </el-aside>
-    <el-container>
-      <el-header height="35vw" class="header" :style="{ backgroundImage: `url(${sider?.icon.banner})` }">
-        <h2>{{ sider?.icon.name }}</h2>
+    <el-container v-if="sider" class="content">
+      <el-header height="35vw" class="header" :style="{ backgroundImage: `url(${sider.icon.banner})` }">
+        <h2>{{ sider.icon.name }}</h2>
       </el-header>
-      <el-main style="--el-main-padding: 0px">
-        <p v-if="sider?.icon.id == 0">头像</p>
-        <p v-else-if="sider?.icon.id == 1">主页</p>
+      <el-main class="main">
+        <p v-if="sider.icon.id == 0">头像</p>
+        <p v-else-if="sider.icon.id == 1">主页</p>
         <Show v-else :size="0"/>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 
 import Sider from './components/Sider.vue'
 import Show from './components/Show.vue';
+import Title from './components/Title.vue'
 
-const sider = ref<InstanceType<typeof Sider> | null>(null)
-const watch = ref<number[]>([])
+import { ElContainer, ElAside, ElHeader, ElMain } from 'element-plus'
 
-document.body.style.setProperty("--title", window.location.pathname == "/electron" ? "50px" : "0px")
+const sider = ref(null)
+const watch = ref([])
+
+document.body.style.setProperty("--title", window.location.pathname == "/" ? "50px" : "0px")
 
 setTimeout(() => {
-  watch.value = [2, 3, 4, 5]
+  watch.value = [2, 3, 4, 5, 6]
 }, 10)
 </script>
 
 <style scoped lang="scss">
 .common-layout {
-  width: 100vw;
-  height: calc(100 * var(--vh));
+  width: calc(100vw - 11px);
+  min-width: 500px;
+  height: calc(100 * var(--vh) - 10px - var(--title));
   overflow: hidden;
 
   .aside {
-    max-width: 100px;
-    height: calc(100 * var(--vh) - var(--title));
+    max-width: 80px;
     background-color: var(--scroll-background);
     overflow: hidden;
+  }
+
+  .content {
+    max-width: calc(100% - min(80px, 18vw));
   }
 
   .header {
@@ -59,6 +66,11 @@ setTimeout(() => {
       text-shadow: 1px 2px 2px rgb(0 0 0 / 50%);
       float: left;
     }
+  }
+
+  .main {
+    --el-main-padding: 0px;
+    background-color: white;
   }
 }
 </style>

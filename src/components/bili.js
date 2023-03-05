@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { formatDate } from './util'
 
-export function TaskWaitAll(args: Array<String>) {
-	function getPicture(bv: String) {
+export function TaskWaitAll(args) {
+	function getPicture(bv) {
 		return axios.get(`https://aliyun.nana7mi.link/video.Video(${bv}).get_info()?max_age=2592000`).then(
 			res => {
 				return {

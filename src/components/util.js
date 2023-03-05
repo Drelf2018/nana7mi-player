@@ -1,20 +1,4 @@
-export interface IconContent {
-    id: number,
-    select: boolean,
-    face: boolean,
-    src: string,
-    banner: string,
-    name: string,
-}
-
-export interface ItemContent {
-    title: string,
-    src: string,
-    url: string,
-    time: string
-}
-
-export function formatDate(time: any): string {
+export function formatDate(time) {
     let date = new Date(time);
     
     let YY = date.getFullYear();
@@ -28,7 +12,7 @@ export function formatDate(time: any): string {
     return YY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
 }
 
-export function on(event: string, fn: () => any) {
+export function on(event, fn) {
     fn()
     window.addEventListener(event, fn)
 }

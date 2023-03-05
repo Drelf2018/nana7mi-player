@@ -3,14 +3,16 @@
     <Icon :content="IconMap.get(0)" @select="changeSelect" />
     <Icon :content="IconMap.get(1)" @select="changeSelect" style="--pic-background-color: white" />
   </div>
-  <el-scrollbar :height="'calc(100 * var(--vh) - min(35vw, 200px) - var(--title))'" view-style="z-index: 1" class="scroll">
+  <el-scrollbar :height="'calc(100 * var(--vh) - 10px - min(35vw, 200px) - var(--title))'" view-style="z-index: 1" class="scroll">
     <Icon v-for="w in watch" :key="w" :content="IconMap.get(w)" @select="changeSelect" />
   </el-scrollbar>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
 import axios from 'axios'
+
+import { ElScrollbar } from 'element-plus'
 
 import Icon from './Icon.vue'
 
@@ -23,7 +25,7 @@ const selectedIcon = computed(() => {
 })
 
 // 修改被选择按钮
-function changeSelect(position: number) {
+function changeSelect(position) {
   selectedIcon.value.select = false
   IconMap.value.get(position).select = true
   lastSelected.value = position
@@ -58,7 +60,7 @@ axios.get("https://aliyun.nana7mi.link/user.User(434334701).get_user_info().face
     banner: "https://yun.nana7mi.link/afternoon.webp",
     name: "哔哩哔哩"
   })
-)
+).catch(console.log)
 
 defineExpose({ icon: selectedIcon })
 </script>
