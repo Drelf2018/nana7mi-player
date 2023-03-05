@@ -12,7 +12,7 @@ export function TaskWaitAll(args) {
 					time: formatDate(res.data.data.pubdate * 1000)
 				}
 			}
-		)
+		).catch(console.log)
 	}
 	let taskall = []
 	for (let arg of args) taskall.push(getPicture(arg))

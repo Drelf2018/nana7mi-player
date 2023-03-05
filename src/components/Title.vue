@@ -6,7 +6,7 @@
 		</div>
 		<div>
 			<el-button :icon="Minus" circle size="small" @click="miniWin" />
-			<el-button :icon="Close" circle size="small" @click="closeWin" />
+			<el-button id="close" :icon="Close" circle size="small" style="color: red" color="rgb(255 20 20 / 10%)" @click="closeWin" />
 		</div>
 	</div>
 </template>
@@ -48,8 +48,14 @@ function miniWin() {
 		align-items: center;
 	}
 
+	#close:hover {
+		color: white !important;
+	}
+
 	button {
 		-webkit-app-region: none;
+
+		
 	}
 }
 </style>
