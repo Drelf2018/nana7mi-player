@@ -21,6 +21,7 @@ async function createWindow() {
     transparent: true,
     backgroundColor: '#00000000',
     width: 510,
+    minWidth: 310,
     height: 700,
     icon: "public/favicon.ico",
     webPreferences: {

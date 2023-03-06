@@ -1,5 +1,5 @@
 <template>
-	<el-card shadow="hover" class="card" :body-style="{ padding: '0px' }">
+	<el-card class="card" :body-style="{ padding: '0px' }">
 		<a :href="item.url" target="_blank">
 			<img :src="item.src" class="image" />
 			<div class="container">
@@ -23,8 +23,9 @@ defineProps({
 
 <style scoped lang="scss">
 .card {
-	width: calc(100% / var(--size) - 10px * (var(--size) - 1) / var(--size) - 1px);
-
+	width: calc(100% / var(--size) - 10px * (var(--size) - 1) / var(--size));
+	border: none;
+	
 	a {
 		color: inherit
 	}
@@ -44,7 +45,7 @@ defineProps({
 			position: relative;
 			bottom: 0;
 			.time {
-				font-size: 0.7em;
+				font-size: 0.75em;
 				color: grey;
 				display: block;
 				text-align: right;

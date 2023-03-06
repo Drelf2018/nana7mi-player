@@ -1,7 +1,7 @@
 <template>
 	<div class="title">
 		<div>
-			<el-avatar :size="40" src="/favicon.ico" />
+			<el-avatar :size="40" src="/favicon.ico" @click="reload" />
 			<span>海比播放器</span>
 		</div>
 		<div>
@@ -17,6 +17,10 @@ import { ipcRenderer } from "electron";
 
 import { ElAvatar, ElButton } from 'element-plus'
 
+function reload() {
+	location. reload()
+}
+
 function closeWin() {
   ipcRenderer.send("window-close");
 }
@@ -29,7 +33,7 @@ function miniWin() {
 <style scoped lang="scss">
 .title {
 	background-color: white;
-	height: 50px;
+	height: var(--title);
 	width: calc(100% - 2em);
 	padding: 0 1em;
 	-webkit-app-region: drag;
@@ -52,10 +56,8 @@ function miniWin() {
 		color: white !important;
 	}
 
-	button {
+	span:first-child, button {
 		-webkit-app-region: none;
-
-		
 	}
 }
 </style>

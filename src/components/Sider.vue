@@ -3,7 +3,7 @@
     <Icon :content="IconMap.get(0)" @select="changeSelect" />
     <Icon :content="IconMap.get(1)" @select="changeSelect" style="--pic-background-color: white" />
   </div>
-  <el-scrollbar :height="'calc(100 * var(--vh) - 10px - min(35vw, 200px) - var(--title))'" view-style="z-index: 1" class="scroll">
+  <el-scrollbar :height="'calc(100vh - 10px - min(35vw, 160px) - var(--title))'" view-style="z-index: 1" class="scroll">
     <Icon v-for="w in watch" :key="w" :content="IconMap.get(w)" @select="changeSelect" />
   </el-scrollbar>
 </template>
@@ -68,7 +68,8 @@ defineExpose({ icon: selectedIcon })
 <style scoped lang="scss">
 .sticky {
   height: 35vw;
-  max-height: 200px;
+  min-height: 130px;
+  max-height: 160px;
   position: relative;
   z-index: 2;
   display: flex;
@@ -83,9 +84,10 @@ defineExpose({ icon: selectedIcon })
 
 .scroll {
   z-index: 1;
+  height: auto;
 
   .icon {
-    margin: 2vw auto;
+    margin: 10px;
   }
 
   :deep(.el-scrollbar__bar) {

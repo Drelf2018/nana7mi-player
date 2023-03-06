@@ -1,7 +1,7 @@
 <template>
   <Title></Title>
   <el-container class="common-layout">
-    <el-aside width="18vw" class="aside">
+    <el-aside width="80px" class="aside">
       <Sider ref="sider" :watch="watch" />
     </el-aside>
     <el-container v-if="sider" class="content">
@@ -29,8 +29,6 @@ import { ElContainer, ElAside, ElHeader, ElMain } from 'element-plus'
 const sider = ref(null)
 const watch = ref([])
 
-document.body.style.setProperty("--title", window.location.pathname == "/" ? "50px" : "0px")
-
 setTimeout(() => {
   watch.value = [2, 3, 4, 5, 6]
 }, 10)
@@ -38,23 +36,22 @@ setTimeout(() => {
 
 <style scoped lang="scss">
 .common-layout {
-  width: calc(100vw - 11px);
-  min-width: 500px;
-  height: calc(100 * var(--vh) - 10px - var(--title));
+  width: 100%;
+  height: calc(100vh - 10px - var(--title));
   overflow: hidden;
 
   .aside {
-    max-width: 80px;
     background-color: var(--scroll-background);
     overflow: hidden;
   }
 
   .content {
-    max-width: calc(100% - min(80px, 18vw));
+    width: calc(100% - 80px);
   }
 
   .header {
-    max-height: 200px;
+    min-height: 130px;
+    max-height: 160px;
     background-size: cover;
     z-index: 2;
 

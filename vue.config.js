@@ -6,7 +6,7 @@ module.exports = {
       builderOptions: {
         appId: 'link.nana7mi.player',
         productName: 'player',
-        asar: false,
+        asar: true,
         win: {
           target: 'nsis',
           icon: './public/favicon.ico'

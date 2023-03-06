@@ -16,7 +16,9 @@
 }
 
 a {
+  font-weight: 500;
   text-decoration: inherit;
+  cursor: pointer;
 }
 
 html {
@@ -24,6 +26,7 @@ html {
 }
 
 body {
+  --title: 50px;
   margin: 0px;
   display: flex;
   place-items: center;
@@ -33,6 +36,8 @@ body {
 
 #app {
   margin: 5px;
+  width: calc(100vw - 10px);
+  height: calc(100vh - 10px);
   text-align: center;
   overflow: hidden;
   border-radius: 10px;

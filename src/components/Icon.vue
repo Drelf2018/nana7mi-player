@@ -37,16 +37,16 @@ function up() {
 
 <style lang="scss">
 .down {
-  scale: 0.9 !important;
+  transform: scale(0.9) !important;
 }
 
 .hover {
   &[selected=true] {
-    scale: 1.05;
+    transform: scale(1.05);
   }
 
   &[selected=false] {
-    scale: 1.1;
+    transform: scale(1.1);
   }
 }
 

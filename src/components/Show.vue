@@ -1,6 +1,6 @@
 <template>
-	<el-scrollbar :height="'calc(100 * var(--vh) - 10px - min(35vw, 200px) - var(--title))'" view-class="view">
-		<div class="line" v-for="line in realData">
+	<el-scrollbar :height="'calc(100vh - 10px - min(35vw, 160px) - var(--title))'" view-class="view">
+		<div class="line" :size="line.length == realSize" v-for="line in realData">
 			<Item v-for="i in line" :item="i" :style="{'--size': realSize}" />
 		</div>
 	</el-scrollbar>
@@ -43,7 +43,7 @@ const realData = computed(() => {
 })
 
 on("resize", function() {
-	if(props.size == 0) realSize.value = Math.ceil((window.innerWidth - 11) / 250)
+	if(props.size == 0) realSize.value = Math.floor((window.innerWidth - 91) / 200)
 })
 
 TaskWaitAll([
@@ -67,6 +67,13 @@ TaskWaitAll([
 
 	.line:last-child {
 		padding-bottom: 10px;
+
+		&[size=false] {
+			justify-content: flex-start;
+			.card {
+				margin-right: 10px;
+			}
+		}
 	}
 }
 </style>
