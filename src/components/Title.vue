@@ -6,19 +6,30 @@
 		</div>
 		<div>
 			<el-button :icon="Minus" circle size="small" @click="miniWin" />
+			<el-button :icon="Switch" circle size="small" @click="resizeWin" />
 			<el-button id="close" :icon="Close" circle size="small" style="color: red" color="rgb(255 20 20 / 10%)" @click="closeWin" />
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { Close, Minus } from '@element-plus/icons-vue'
+import { Close, Minus, Switch } from '@element-plus/icons-vue'
 import { ipcRenderer } from "electron";
 
+import { ref } from 'vue'
 import { ElAvatar, ElButton } from 'element-plus'
 
+const remote = require('electron').remote;
+const isFull = ref(true)
+
 function reload() {
-	location. reload()
+	location.reload()
+}
+
+function resizeWin() {
+	if(isFull.value) remote.getCurrentWindow().setSize(309, 59)
+	else remote.getCurrentWindow().setSize(509, 700)
+	isFull.value = !isFull.value
 }
 
 function closeWin() {

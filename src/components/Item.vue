@@ -32,7 +32,7 @@ defineProps({
 
 	.container { 
 		padding: 5px;
-		font-size: 0.8em;
+		font-size: 0.9em;
 		span {
 			width: 100%;
 			display: block;

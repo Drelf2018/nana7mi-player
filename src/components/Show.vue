@@ -1,5 +1,5 @@
 <template>
-	<el-scrollbar :height="'calc(100vh - 10px - min(35vw, 160px) - var(--title))'" view-class="view">
+	<el-scrollbar :height="'calc(100vh - 10px - max(130px, min(35vw, 160px)) - var(--title))'" view-class="view">
 		<div class="line" :size="line.length == realSize" v-for="line in realData">
 			<Item v-for="i in line" :item="i" :style="{'--size': realSize}" />
 		</div>

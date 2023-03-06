@@ -62,6 +62,7 @@ function up() {
   .pic {
     width: 100%;
     display: block;
+    object-fit: cover;
     background-color: var(--pic-background-color);
   }
 

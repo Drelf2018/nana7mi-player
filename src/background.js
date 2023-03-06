@@ -21,11 +21,15 @@ async function createWindow() {
     transparent: true,
     backgroundColor: '#00000000',
     width: 510,
-    minWidth: 310,
+    minWidth: 309,
     height: 700,
+    minHeight: 59,
     icon: "public/favicon.ico",
     webPreferences: {
-      
+      nodeIntegration: true,  // 赋予此窗口页面中的JavaScript访问Node.js环境的能力
+      // 在electron 10.0.0之后，remote模块默认关闭
+      // 必须手动设置webPreferences中的enableRemoteModule为true之后才能使用
+      enableRemoteModule: true,   // 打开remote模块
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,

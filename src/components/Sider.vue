@@ -3,7 +3,7 @@
     <Icon :content="IconMap.get(0)" @select="changeSelect" />
     <Icon :content="IconMap.get(1)" @select="changeSelect" style="--pic-background-color: white" />
   </div>
-  <el-scrollbar :height="'calc(100vh - 10px - min(35vw, 160px) - var(--title))'" view-style="z-index: 1" class="scroll">
+  <el-scrollbar :height="'calc(100vh - 10px - max(130px, min(35vw, 160px)) - var(--title))'" view-style="z-index: 1" class="scroll">
     <Icon v-for="w in watch" :key="w" :content="IconMap.get(w)" @select="changeSelect" />
   </el-scrollbar>
 </template>
