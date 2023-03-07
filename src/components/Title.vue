@@ -2,22 +2,27 @@
 	<div class="title">
 		<div>
 			<el-avatar :size="40" src="/favicon.ico" @click="reload" />
-			<span>海比播放器</span>
+			<span><slot></slot></span>
 		</div>
 		<div>
+			<el-button :icon="ArrowLeftBold" size="small" circle @click="() => covered.close()"></el-button>
 			<el-button :icon="Minus" circle size="small" @click="miniWin" />
-			<el-button :icon="Switch" circle size="small" @click="resizeWin" />
+			<el-button :icon="isFull ? ZoomOut : ZoomIn" circle size="small" @click="resizeWin" />
 			<el-button id="close" :icon="Close" circle size="small" style="color: red" color="rgb(255 20 20 / 10%)" @click="closeWin" />
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { Close, Minus, Switch } from '@element-plus/icons-vue'
+import { Close, Minus, ArrowLeftBold, ZoomOut, ZoomIn } from '@element-plus/icons-vue'
 import { ipcRenderer } from "electron";
 
 import { ref } from 'vue'
 import { ElAvatar, ElButton } from 'element-plus'
+
+defineProps({
+	covered: Object
+})
 
 const remote = require('electron').remote;
 const isFull = ref(true)
@@ -27,7 +32,7 @@ function reload() {
 }
 
 function resizeWin() {
-	if(isFull.value) remote.getCurrentWindow().setSize(309, 59)
+	if(isFull.value) remote.getCurrentWindow().setSize(359, 59)
 	else remote.getCurrentWindow().setSize(509, 700)
 	isFull.value = !isFull.value
 }

@@ -27,6 +27,7 @@ html {
 
 body {
   --title: 50px;
+  --main-height: calc(100vh - 10px - var(--title));
   margin: 0px;
   display: flex;
   place-items: center;

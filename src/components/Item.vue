@@ -1,6 +1,6 @@
 <template>
 	<el-card class="card" :body-style="{ padding: '0px' }">
-		<a :href="item.url" target="_blank">
+		<a href="javascript:;" @click="() => covered.open(item.url)">
 			<img :src="item.src" class="image" />
 			<div class="container">
 				<span>{{ item.title }}</span>
@@ -13,11 +13,11 @@
 </template>
 
 <script setup>
-
 import { ElCard } from 'element-plus'
 
 defineProps({
-	item: Object
+	item: Object,
+  covered: Object
 })
 </script>
 
