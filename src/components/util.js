@@ -1,3 +1,9 @@
+export function GetStorage(key, def) {
+    let val = localStorage.getItem(key)
+    if(val != null) return val
+    return def
+}
+
 export function formatDate(time) {
     let date = new Date(time);
     

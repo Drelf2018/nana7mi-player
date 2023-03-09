@@ -1,5 +1,5 @@
 <template>
-  <div :class="{player: true, cover: covered.status}">
+  <div ref="player" :class="{player: true, cover: covered.status, height: covered.isWidth}">
     <el-divider />
     <slot></slot>
   </div>
@@ -14,16 +14,23 @@ defineProps({
 </script>
 
 <style lang="scss">
+.height {
+  max-height: calc(0.5 * var(--main-height) - 2em);
+}
+
 .player {
   position: relative;
   padding: 1em;
-  width: calc(100% - 2em);
+  width: max-content;
+  max-width: calc(100% - 79px - 2em);
   height: calc(var(--main-height) - 2em);
   left: 100%;
   top: calc(-100% + var(--title));
   background-color: white;
   z-index: 5;
-  transition: left 0.2s;
+  transform: translateX(0);
+  border-bottom-left-radius: 10px;
+  transition: transform 0.2s;
 
   button {
     float: right;
@@ -39,6 +46,7 @@ defineProps({
 }
 
 .cover {
-  left: 0 !important;
+  transform: translateX(calc(-100% + 1px));
+  box-shadow: -7px 15px 15px 0px rgb(0 0 0 / 30%);
 }
 </style>

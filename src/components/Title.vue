@@ -5,16 +5,16 @@
 			<span><slot></slot></span>
 		</div>
 		<div>
-			<el-button :icon="ArrowLeftBold" size="small" circle @click="() => covered.close()"></el-button>
-			<el-button :icon="Minus" circle size="small" @click="miniWin" />
-			<el-button :icon="isFull ? ZoomOut : ZoomIn" circle size="small" @click="resizeWin" />
-			<el-button id="close" :icon="Close" circle size="small" style="color: red" color="rgb(255 20 20 / 10%)" @click="closeWin" />
+			<el-button :icon="isLock ? Unlock : Lock" size="small" circle @click="() => lock()" :title="isLock ? '取消置顶' : '置于顶层'" />
+			<el-button :icon="Minus" circle size="small" @click="miniWin" title="最小化" />
+			<el-button :icon="isFull ? ZoomOut : ZoomIn" circle size="small" @click="resizeWin" title="切换窗口大小" />
+			<el-button id="close" :icon="Close" circle size="small" style="color: red" color="rgb(255 20 20 / 10%)" @click="closeWin" title="关闭" />
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { Close, Minus, ArrowLeftBold, ZoomOut, ZoomIn } from '@element-plus/icons-vue'
+import { Close, Minus, ZoomOut, ZoomIn, Unlock, Lock } from '@element-plus/icons-vue'
 import { ipcRenderer } from "electron";
 
 import { ref } from 'vue'
@@ -26,6 +26,12 @@ defineProps({
 
 const remote = require('electron').remote;
 const isFull = ref(true)
+const isLock = ref(false)
+
+function lock() {
+	isLock.value = !isLock.value
+	ipcRenderer.send(isLock.value ? "window-lock" : "window-unlock");
+}
 
 function reload() {
 	location.reload()
@@ -33,7 +39,7 @@ function reload() {
 
 function resizeWin() {
 	if(isFull.value) remote.getCurrentWindow().setSize(359, 59)
-	else remote.getCurrentWindow().setSize(509, 700)
+	else remote.getCurrentWindow().setSize(890, 700)
 	isFull.value = !isFull.value
 }
 

@@ -28,6 +28,8 @@ html {
 body {
   --title: 50px;
   --main-height: calc(100vh - 10px - var(--title));
+  --header: 145px;
+  --show-height: calc(var(--main-height) - var(--header));
   margin: 0px;
   display: flex;
   place-items: center;
@@ -42,7 +44,7 @@ body {
   text-align: center;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 0 5px grey;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   background-color: white;
 }
 

@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, shell } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -13,6 +13,8 @@ let win
 
 ipcMain.on("window-close", () => win.destroy());
 ipcMain.on("window-mini", () => win.minimize());
+ipcMain.on("window-lock", () => win.setAlwaysOnTop(true))
+ipcMain.on("window-unlock", () => win.setAlwaysOnTop(false))
 
 async function createWindow() {
   // Create the browser window.
@@ -20,7 +22,7 @@ async function createWindow() {
     frame: false,
     transparent: true,
     backgroundColor: '#00000000',
-    width: 510,
+    width: 891,
     minWidth: 359,
     height: 700,
     minHeight: 59,
@@ -35,6 +37,11 @@ async function createWindow() {
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
     }
+  })
+
+  win.webContents.on('new-window', function(e, url) {
+    e.preventDefault();
+    shell.openExternal(url);
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {

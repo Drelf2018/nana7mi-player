@@ -1,5 +1,5 @@
 <template>
-	<el-scrollbar :height="'calc(var(--main-height) - 160px)'" view-class="view">
+	<el-scrollbar :height="'var(--show-height)'" view-class="view">
     <div v-infinite-scroll="GetAllVideos" :infinite-scroll-immediate="false" :infinite-scroll-distance="10">
       <div class="line" :size="line.length == realSize" v-for="line in realData">
         <Item v-for="i in line" :item="i" :covered="covered" :style="{'--size': realSize}" />

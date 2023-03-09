@@ -1,0 +1,177 @@
+<template>
+    <div class="container">
+      <div class="glass">
+        <div class="login-form">
+          <h2>
+            登录到 <span style="color: rgb(0, 161, 214)">bilibili.com</span>
+          </h2>
+          <input type="text" v-model="uid" placeholder="B站UID">
+          <button @click="getToken">获取验证码</button>
+          <span class="token">{{ token }}</span>
+          <span style="color: rgb(60,60,60);font-size: 12px;margin: 0.5em 0;">
+            <em>发送验证码至 </em>
+            <a href="https://t.bilibili.com/643451139714449427" style="color: rgb(255 74 64);" target="_blank">动态评论</a>
+            <em> 验证账号</em>
+          </span>
+          <button @click="login">{{ canLogin ? '登录' : token == '验证码' ? '等待中' : '验证中' }}</button>
+        </div>
+      </div>
+    </div>
+</template>
+
+<script setup>
+import axios from 'axios'
+import { ref } from 'vue'
+
+const uid = ref("")
+const token = ref("验证码")
+const canLogin = ref(false)
+const ApiUrl = "https://api.nana7mi.link"
+
+
+let secret = ""
+let plan = null
+
+function getToken() {
+  let bid = parseInt(uid.value)
+  if (isNaN(bid)) return
+  axios.get(ApiUrl + "/token?uid="+uid.value).then(
+    res => {
+      secret = res.data.data[0]
+      token.value = res.data.data[1]
+      if (plan) clearInterval(plan)
+      plan = setInterval(async () => {
+        let res = await axios.get("https://aliyun.nana7mi.link/comment.get_comments(643451139714449427,comment.CommentResourceType.DYNAMIC:parse,1:int).replies")
+        res.data.data.filter(r => r.member.mid == uid.value).forEach(r => {
+          if (r.content.message == token.value) {
+            canLogin.value = true
+            clearInterval(plan)
+            plan = null
+          }
+        })
+      }, 5000)
+    }
+  )
+}
+
+function login() {
+  if (!canLogin.value) return
+  axios.get(ApiUrl + "/register?uid="+uid.value+"&token="+secret).then(
+    res => {
+      if (res.data.code == 0) {
+        localStorage.setItem("uid", uid.value)
+        localStorage.setItem("token", res.data.data)
+        location.reload()
+      }
+    }
+  )
+}
+</script>
+
+<style lang="scss" scoped>
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  background: url("https://yun.nana7mi.link/afternoon.webp") -225px center / cover repeat-x fixed;
+  overflow: hidden;
+}
+
+.glass {
+  width: 35%;
+  min-width: 270px;
+  max-width: 340px;
+  position: relative;
+  margin: auto auto auto 1em;
+  border-radius: 20px;
+  padding: 0.5em 1em;
+  box-shadow: 0 0 10px 0px rgb(0 0 0 / 30%);
+  overflow: hidden;
+  z-index: 2;
+  background: inherit;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    width: calc(100% + 2em);
+    height: calc(100% + 2em);
+    top: -1em;
+    left: -1em;
+    background: inherit;
+    box-shadow: 0 0 0 182px rgba(255, 255, 255, 0.4) inset;
+    filter: blur(7px);
+    z-index: -1;
+  }
+}
+
+.close {
+  font-size: 1.5em;
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  padding: 0.25em;
+  border-radius: 1em;
+  color: white;
+  transition: all 0.2s;
+
+  &:hover {
+    color: rgba(255, 0, 0, 0.75);
+    background-color: white;
+    box-shadow: 0 1px 3px white;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 30px;
+  text-align: center;
+  position: relative;
+
+  h2 {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  input, button {
+    margin: 6px 0;
+    height: 40px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.5em;
+    padding: 0 14px;
+    color: #3d5245;
+    font-family: HarmonyOS_Medium;
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+
+  input::placeholder {
+    color: #3d5245;
+  }
+
+  button:focus, input:focus {
+    outline: 0;
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  button:hover, input:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+.split {
+  width: 98%;
+  margin: 0.5em auto;
+  border-bottom: solid 1px rgba(128,128,128,0.75);
+}
+
+.token {
+  line-height: 28px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 0.5em;
+  margin: 6px 0;
+  padding: 6px;
+}
+</style>
