@@ -29,10 +29,10 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'cnpm'
+        cache: 'pnpm'
     - name: Install
-      run: cnpm install
+      run: pnpm install
     - name: CI
-      run: cnpm ci
+      run: pnpm ci
     - name: Build
-      run: cnpm run electron:build
+      run: pnpm run electron:build
