@@ -2,6 +2,8 @@
 
 import { app, protocol, BrowserWindow, ipcMain, shell } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
+
+const windowStateKeeper = require('electron-window-state')
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Scheme must be registered before the app is ready
@@ -18,13 +20,20 @@ ipcMain.on("window-unlock", () => win.setAlwaysOnTop(false))
 
 async function createWindow() {
   // Create the browser window.
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: 800,
+    defaultHeight: 600
+  })
+
   win = new BrowserWindow({
     frame: false,
     transparent: true,
     backgroundColor: '#00000000',
-    width: 891,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     minWidth: 359,
-    height: 700,
     minHeight: 59,
     icon: "public/favicon.ico",
     webPreferences: {
@@ -44,6 +53,8 @@ async function createWindow() {
     shell.openExternal(url);
   })
 
+  mainWindowState.manage(win)
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -54,6 +65,10 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
 }
+
+app.on('before-quit', function () {
+  mainWindowState.saveState(mainWindow)
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

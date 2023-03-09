@@ -21,4 +21,5 @@ export function formatDate(time) {
 export function on(event, fn) {
     fn()
     window.addEventListener(event, fn)
+    return () => window.removeEventListener(event, fn)
 }
