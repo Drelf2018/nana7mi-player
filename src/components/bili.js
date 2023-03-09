@@ -2,6 +2,7 @@ import axios from 'axios'
 import { formatDate } from './util'
 
 export async function GetUserInfo(uid) {
+  if(!uid) throw "不是你不填uid想获取个锤子呢？"
   let res = await axios.get(`https://aliyun.nana7mi.link/user.User(${uid}).get_user_info()`)
   return {src: res.data.data.face, banner: "url(" + res.data.data.top_photo + ")"}
 }
