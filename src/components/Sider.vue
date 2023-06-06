@@ -10,8 +10,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { GetStorage } from './util'
-import { GetUserInfo } from './bili'
+import { GetStorage } from '../scripts/util'
+import { GetUserInfo } from '../scripts/bili'
 
 import { ElScrollbar } from 'element-plus'
 

@@ -10,8 +10,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { on } from './util';
-import { TaskWaitAll, GetVideos } from './bili'
+import { on } from '../scripts/util';
+import { TaskWaitAll, GetVideos } from '../scripts/bili'
 
 import { ElScrollbar } from 'element-plus'
 
